@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysite
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: mysite
+    spec:
+      containers:
+      - name: web-app
+        image: dhanapal406/web-app
+        ports:
+          - containerPort: 80
+        volumeMounts:
+        - name: indexdata
+          mountPath: /usr/local/apache2/htdocs
+      volumes:
+      - name: indexdata
+        hostPath:
+          path: /tmp/backup
+   
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: mysite
+spec: 
+  type: NodePort
+  selector: 
+    app: mysite
+  ports: 
+  - name: http
+    nodePort: 30023
+    port: 80
+    protocol: TCP
+#kubectl scale deployments mysite --replicas=4
+#kubectl set image deployments mysite tomcat=nginx --record
+#kubectl rollout status deployments mysite
+#kubectl rollout history deployment mysite
+#kubectl get replicasets (rs)
+#kubectl rollout undo deployment mysite
+#kubectl rollout history deployment mysite --revision=3
+#kubectl autoscale deployments mysite  --min=5 --max=15 --cpu-percent=8
