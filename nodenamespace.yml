@@ -1,0 +1,17 @@
+#nodeName:
+#nodeName is a more direct form of node selection than affinity or nodeSelector. nodeName is a field in the Pod spec. If the nodeName field is not empty, the scheduler ignores the Pod and the kubelet on the named node tries to place the Pod on that node. Using nodeName overrules using nodeSelector or affinity and anti-affinity rules.
+
+#Some of the limitations of using nodeName to select nodes are:
+#Here is an example of a Pod spec using the nodeName field:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  nodeName: kube-01
+#The above Pod will only run on the node kube-01.
+
