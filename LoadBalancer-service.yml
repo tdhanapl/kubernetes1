@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-service
+spec:
+  selector:
+    app: example
+  ports:
+    - port: 8765
+      targetPort: 9376
+  type: LoadBalancer
+#kubectl expose deployment example --port=8765 --target-port=9376  --name=loadbalancer-service --type=LoadBalancer
